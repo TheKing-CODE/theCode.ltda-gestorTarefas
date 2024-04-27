@@ -1,0 +1,2 @@
+Para excluir uma tarefa, você precisa me informa, pelo menos, um campo de buscar <br/>
+exemplo: excluir a tarefa com nome: **
