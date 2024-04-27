@@ -15,6 +15,6 @@ Obs.: Esse é meu primeiro projeto web!! Lembre-se disso hahah!!
 
 <p><strong>Posso contribuir?</strong></p>
 Deseja contribuir adicionando novas interações ou sugestões?! Abaixo está meu Linkendin, Instagram  e email...<br/>
-<a href ="https://www.instagram.com/thecode.ltda/"></a>Instagram<br/>
-<a href = "allantecchristian23@gmail.com"></a>Email<br/>
+<a href ="https://www.instagram.com/thecode.ltda/">Instagram</a><br/>
+<a href = "allantecchristian23@gmail.com">Email</a><br/>
 Linkendin: 
