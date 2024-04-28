@@ -1,0 +1,2 @@
+para realizar uma consulta, você precisa me informa, pelo menos, um campo de buscar <br/>
+exemplo: consulte a tarefa com nome: **

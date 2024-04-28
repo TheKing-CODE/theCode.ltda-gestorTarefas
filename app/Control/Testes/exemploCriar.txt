@@ -1,0 +1,2 @@
+"Para criar uma tarefa, siga o padrão abaixo. 
+<br/>Ex.: criar tarefa nome: ** descrição: ** prazo:**"

@@ -17,6 +17,7 @@
     	private $chavesParaExibirExemplos;
     	private $chavesParaExibirTodasAsTarefas;
 
+    	private $chavesArray = array();
 
     	private $exemploConsultar = "";
     	private $exemploCriar = "";
@@ -191,29 +192,33 @@
 		public function verificaAcaoDesejada($mensagem){
 			$mensagem = $this->formatarMensagem($mensagem);
 			if ($this->verifica_qnt_acoes($mensagem) > 1) {
-   				return false;
+	    		return false;
 			} else {
-    			if ($this->interacao_sobre_acao($mensagem)) {
-        			return $this->interacao_sobre_acao($mensagem);
-    			} else if ($this->interacao_sobre_criador($mensagem)) {
-        			return $this->interacao_sobre_criador($mensagem);
-    			} else if ($this->interacao_sobre_objetivo($mensagem)) {
-        			return $this->interacao_sobre_objetivo($mensagem);
-    			} else if ($this->interacao_sobre_exemplo($mensagem)) {
-	        		return $this->interacao_sobre_exemplo($mensagem);
-    			} elseif ($this->interacao_para_exibir_todas_tarefas($mensagem)) {
-    				return $this->interacao_para_exibir_todas_tarefas($mensagem);
-				}else if ($this->validarMsgParaCriarTarefa($mensagem) == true and $this->verificar_campos_criar($mensagem) == null) {
-			        return "Criar";
-    			} else if ($this->verificar_campos_criar($mensagem) and $this->validarMsgParaCriarTarefa($mensagem) == true) {
-        			return "faltando: " . $campo_faltando = $this->verificar_campos_criar($mensagem);
-    			} else if ($this->validarMsgParaConsultar($mensagem) == true and $this->verifica_campos_consultar($mensagem) != null) {
-        			return $this->verifica_campos_consultar($mensagem);
-    			} else if ($this->validarMsgParaDeletar($mensagem) == true and $this->verifica_campos_deletar($mensagem) != null) {
-        			return $this->verifica_campos_deletar($mensagem);
-    			};
-    			return "Não comprendi sua mensagem. <br/> Por favor! tente novamente";
-			}
+	    		if ($this->interacao_sobre_acao($mensagem)) {
+	        		return $this->interacao_sobre_acao($mensagem);
+	    		} else if ($this->interacao_sobre_criador($mensagem)) {
+		        	return $this->interacao_sobre_criador($mensagem);
+	    		} else if ($this->interacao_sobre_objetivo($mensagem)) {
+	        		return $this->interacao_sobre_objetivo($mensagem);
+	    		} else if ($this->interacao_sobre_exemplo($mensagem)) {
+			        return $this->interacao_sobre_exemplo($mensagem);
+	    		} else if ($this->interacao_para_exibir_todas_tarefas($mensagem)) {
+		        	return $this->interacao_para_exibir_todas_tarefas($mensagem);
+	    		} else if ($this->validarMsgParaCriarTarefa($mensagem) == true and $this->verificar_campos_criar($mensagem) == null) {
+		        	return "Criar";
+	    		} else if ($this->verificar_campos_criar($mensagem) and $this->validarMsgParaCriarTarefa($mensagem) == true) {
+			        return "faltando: " . $campo_faltando = $this->verificar_campos_criar($mensagem);
+	    		} else if ($this->validarMsgParaConsultar($mensagem) == true and $this->verifica_campos_consultar($mensagem) != null and $this->interacao_para_consultar_anterior($mensagem) == false and $this->interacao_para_consultar_posterior($mensagem)== false){
+			        return $this->verifica_campos_consultar($mensagem);
+	    		} else if ($this->validarMsgParaDeletar($mensagem) == true and $this->verifica_campos_deletar($mensagem) != null) {
+		       		return $this->verifica_campos_deletar($mensagem);
+	    		} else if($this->interacao_para_consultar_anterior($mensagem)){
+	    			return $this->interacao_para_consultar_anterior($mensagem);
+	    		} else if($this->interacao_para_consultar_posterior($mensagem)){
+	    			return $this->interacao_para_consultar_posterior($mensagem);
+	    		}
+	    	}
+	    		return "Não comprendi sua mensagem. <br/> Por favor! tente novamente";							
 		}		
 
 		private function formatarMensagem($mensagem){
@@ -234,45 +239,23 @@
 			return $qnt;			
 		}
 
-		private function carregar_Arquivos(){
-				$this->chavesParaCriarTarefa = file_get_contents('C:\xampp\htdocs\Gestor_Tarefas\app\Control\chavesParaCriarTarefas.txt');
-        		$this->chavesParaCriarTarefa = iconv('ISO-8859-1', 'UTF-8', $this->chavesParaCriarTarefa);
-
-        		$this->chavesParaConsultaTarefa = file_get_contents('C:\xampp\htdocs\Gestor_Tarefas\app\Control\chavesParaConsultaTarefas.txt');
-        		$this->chavesParaConsultaTarefa = iconv('ISO-8859-1', 'UTF-8', $this->chavesParaConsultaTarefa);
-
-        		$this->chavesParaExcluirTarefa = file_get_contents('C:\xampp\htdocs\Gestor_Tarefas\app\Control\chavesParaExcluirTarefas.txt');
-        		$this->chavesParaExcluirTarefa = iconv('ISO-8859-1', 'UTF-8', $this->chavesParaExcluirTarefa);
-
-        		$this->chavesParaPerguntas = file_get_contents('C:\xampp\htdocs\Gestor_Tarefas\app\Control\chavesParaPerguntas.txt');
-        		$this->chavesParaPerguntas = iconv('ISO-8859-1', 'UTF-8', $this->chavesParaPerguntas);
-
-        		$this->chavesSobreObjetivo = file_get_contents('C:\xampp\htdocs\Gestor_Tarefas\app\Control\chavesSobreObjetivos.txt');
-        		$this->chavesSobreObjetivo = iconv('ISO-8859-1', 'UTF-8', $this->chavesSobreObjetivo);
-
-        		$this->chavesParaComandos = file_get_contents('C:\xampp\htdocs\Gestor_Tarefas\app\Control\chavesParaComandos.txt');
-        		$this->chavesParaComandos = iconv('ISO-8859-1', 'UTF-8', $this->chavesParaComandos);
-
-		        $this->chavesSobreCriador = file_get_contents('C:\xampp\htdocs\Gestor_Tarefas\app\Control\chavesSobreCriador.txt');
-		        $this->chavesSobreCriador = iconv('ISO-8859-1', 'UTF-8', $this->chavesSobreCriador);    
-
-		        $this->chavesParaExemplos = file_get_contents('C:\xampp\htdocs\Gestor_Tarefas\app\Control\chavesParaExemplos.txt');
-		        $this->chavesParaExemplos = iconv('ISO-8859-1', 'UTF-8', $this->chavesParaExemplos);
-
-		        $this->exemploConsultar = file_get_contents('C:\xampp\htdocs\Gestor_Tarefas\app\Control\exemploConsultar.txt');
-		        $this->exemploConsultar = iconv('ISO-8859-1', 'UTF-8', $this->exemploConsultar);		        
-
-		        $this->exemploCriar = file_get_contents('C:\xampp\htdocs\Gestor_Tarefas\app\Control\exemploCriar.txt');
-		        $this->exemploCriar = iconv('ISO-8859-1', 'UTF-8', $this->exemploCriar);		        
-
-		        $this->exemploExcluir = file_get_contents('C:\xampp\htdocs\Gestor_Tarefas\app\Control\exemploExcluir.txt');
-		        $this->exemploExcluir = iconv('ISO-8859-1', 'UTF-8', $this->exemploExcluir);		            	
-
-		        $this->chavesParaExibirExemplos  = file_get_contents('C:\xampp\htdocs\Gestor_Tarefas\app\Control\chavesParaExibirExemplos.txt');
-		        $this->chavesParaExibirExemplos = iconv('ISO-8859-1', 'UTF-8', $this->chavesParaExibirExemplos);		
-
-    		    $this->chavesParaExibirTodasAsTarefas  = file_get_contents('C:\xampp\htdocs\Gestor_Tarefas\app\Control\chavesParaExibirTodasAsTarefas.txt');
-		        $this->chavesParaExibirTodasAsTarefas = iconv('ISO-8859-1', 'UTF-8', $this->chavesParaExibirTodasAsTarefas);         
+		private function carregar_Arquivos(){				
+			// Array com as chaves e seus respectivos valores
+			$this->chavesArray = array(
+				"chavesParaComando" => "faça, mostre, diga, exibir, demostre",
+    			"chavesParaConsultarTarefa" => "consulte, busque, procure, pesquise, investigue, verifique, analise, explore, consultar, buscar, procurar, pesquisar, investigar, verificar, analisar, explorar",
+    			"chavesParaCriarTarefas" => "criar, construir , elaborar, elabore, gere, estabeleça, prepare, estruture, formule, configure, crie, cria, criação",
+    			"chavesParaExcluirTarefas" => "exclua, remova, elimine, apague, descarte, delete, excluir, deletar. remove, elimina, apagar",
+    			"chavesParaExemplo" => "ex, exemplos, exemplo, demostração, demostrações, ilustração, ilustrações",
+    			"chavesParaExibirExemplos" => "faça, mostre, diga, exibir, demostre",
+    			"chavesParaExibirTodasAsTarefas" => "todas",
+    			"chavesParaPerguntas" => "quem, o que, o qual, por que, qual, como, quando, poderia, ?",
+    			"chavesSobreCriador" => "criador, desenvolvedor, criou, programador, gerou, fez, desenvolveu, programou, codificou",
+    			"ChavesSobreObjetivo" => "objetivo, feita, criada, construida, implementada, programada, desenvolvida, fez",
+    			"ExemploConsultar" => "Para realizar uma consulta, você precisa me informa, pelo menos, um campo de buscar <br/>exemplo: consulte a tarefa com nome: **",
+    			"exemploCriar" => "Para criar uma tarefa, siga o padrão abaixo. <br/>Ex.: criar tarefa nome: ** descrição: ** prazo:**",
+    			"exemploExcluir" => "Para excluir uma tarefa, você precisa me informa, pelo menos, um campo de buscar <br/>exemplo: excluir a tarefa com nome: **"
+			);
     	}		
 
 		function __construct(string $mensagem = "")
@@ -280,17 +263,19 @@
 				$msg = $this->formatarMensagem($mensagem);						
 				$this->primeiraMsg($msg);			
 				$this->carregar_Arquivos();
-				$this->palavrasChavesParaCriar = str_word_count($this->chavesParaCriarTarefa,1);
-				$this->palavrasChavesParaConsultar = str_word_count($this->chavesParaConsultaTarefa,1);
-				$this->palavrasChavesParaDeletar = str_word_count($this->chavesParaExcluirTarefa,1);
-				$this->palavrasChavesParaPerguntas = str_word_count($this->chavesParaPerguntas,1); 
-				$this->palavrasChavesSobreObjetivo = str_word_count($this->chavesSobreObjetivo,1); 
-				$this->palavrasChavesSobreCriador = str_word_count($this->chavesSobreCriador,1);	
-				$this->palavrasChavesParaComandos = str_word_count($this->chavesParaComandos,1);				
-				$this->palavrasChavesParaExibirTodasAsTarefas = str_word_count($this->chavesParaExibirTodasAsTarefas,1);
+				$this->palavrasChavesParaCriar = str_word_count($this->chavesArray["chavesParaCriarTarefas"],1);
+				$this->palavrasChavesParaConsultar = str_word_count($this->chavesArray["chavesParaConsultarTarefa"],1);
+				$this->palavrasChavesParaDeletar = str_word_count($this->chavesArray["chavesParaExcluirTarefas"],1);
+				$this->palavrasChavesParaPerguntas = str_word_count($this->chavesArray["chavesParaPerguntas"],1); 
+				$this->palavrasChavesSobreObjetivo = str_word_count($this->chavesArray["ChavesSobreObjetivo"],1); 
+				$this->palavrasChavesSobreCriador = str_word_count($this->chavesArray["chavesSobreCriador"],1);	
+				$this->palavrasChavesParaComandos = str_word_count($this->chavesArray["chavesParaComando"],1);				
+				$this->palavrasChavesParaExibirTodasAsTarefas = str_word_count($this->chavesArray["chavesParaExibirTodasAsTarefas"],1);
 
-				$this->palavrasChavesParaExemplos = str_word_count($this->chavesParaExemplos,1);
-				$this->palavrasChavesParaExibirExemplos = str_word_count($this->chavesParaExibirExemplos,1);
+				$this->palavrasChavesParaExemplos = str_word_count($this->chavesArray["chavesParaExemplo"],1);
+				$this->palavrasChavesParaExibirExemplos = str_word_count($this->chavesArray["chavesParaExibirExemplos"],1);
+				$this->palavrasChavesParaConsultarTarefasAnteriores = str_word_count($this->chavesArray["chavesParaConsultarAntes"],1);
+				$this->palavrasChavesParaConsultarTarefasPosteriores = str_word_count($this->chavesArray["chavesParaConsultarDepois"],1);
 				$this->palavraTarefa = str_word_count("tarefa, tarefas",1);
 				
 		}
