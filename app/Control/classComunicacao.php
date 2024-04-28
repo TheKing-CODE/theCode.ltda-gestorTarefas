@@ -144,6 +144,23 @@
 	    	};
 	    }
 	    
+	    	    private function interacao_para_consultar_anterior($mensagem){
+	    	$arrayMsg = str_word_count($mensagem,1);
+	    	if($this->verificarValoresIguais($arrayMsg,$this->palavrasChavesParaConsultarTarefasAnteriores) and $this->verificarValoresIguais($arrayMsg,$this->palavrasChavesParaConsultar) and $this->verifica_campos_consultar($mensagem) != null and $this->verificarValoresIguais($arrayMsg,$this->palavraTarefa)){
+	    		return "Antes: ".$this->verifica_campos_consultar($mensagem);
+	    	}else{
+	    		return false;
+	    	}
+	    }
+
+	    private function interacao_para_consultar_posterior($mensagem){
+	    	$arrayMsg = str_word_count($mensagem,1);
+	    	if($this->verificarValoresIguais($arrayMsg,$this->palavrasChavesParaConsultarTarefasPosteriores) and $this->verificarValoresIguais($arrayMsg,$this->palavrasChavesParaConsultar) and $this->verifica_campos_consultar($mensagem) != null and $this->verificarValoresIguais($arrayMsg,$this->palavraTarefa)){
+	    		return "Posterior: ".$this->verifica_campos_consultar($mensagem);
+	    	}else{
+	    		return false;
+	    	}
+	    }
 
 	    //Padrão
 	    private function primeiraMsg(string $mensagem): void{
@@ -191,34 +208,34 @@
 
 		public function verificaAcaoDesejada($mensagem){
 			$mensagem = $this->formatarMensagem($mensagem);
-			if ($this->verifica_qnt_acoes($mensagem) > 1) {
-	    		return false;
-			} else {
-	    		if ($this->interacao_sobre_acao($mensagem)) {
-	        		return $this->interacao_sobre_acao($mensagem);
-	    		} else if ($this->interacao_sobre_criador($mensagem)) {
-		        	return $this->interacao_sobre_criador($mensagem);
-	    		} else if ($this->interacao_sobre_objetivo($mensagem)) {
-	        		return $this->interacao_sobre_objetivo($mensagem);
-	    		} else if ($this->interacao_sobre_exemplo($mensagem)) {
-			        return $this->interacao_sobre_exemplo($mensagem);
-	    		} else if ($this->interacao_para_exibir_todas_tarefas($mensagem)) {
-		        	return $this->interacao_para_exibir_todas_tarefas($mensagem);
-	    		} else if ($this->validarMsgParaCriarTarefa($mensagem) == true and $this->verificar_campos_criar($mensagem) == null) {
-		        	return "Criar";
-	    		} else if ($this->verificar_campos_criar($mensagem) and $this->validarMsgParaCriarTarefa($mensagem) == true) {
-			        return "faltando: " . $campo_faltando = $this->verificar_campos_criar($mensagem);
-	    		} else if ($this->validarMsgParaConsultar($mensagem) == true and $this->verifica_campos_consultar($mensagem) != null and $this->interacao_para_consultar_anterior($mensagem) == false and $this->interacao_para_consultar_posterior($mensagem)== false){
-			        return $this->verifica_campos_consultar($mensagem);
-	    		} else if ($this->validarMsgParaDeletar($mensagem) == true and $this->verifica_campos_deletar($mensagem) != null) {
-		       		return $this->verifica_campos_deletar($mensagem);
-	    		} else if($this->interacao_para_consultar_anterior($mensagem)){
-	    			return $this->interacao_para_consultar_anterior($mensagem);
-	    		} else if($this->interacao_para_consultar_posterior($mensagem)){
-	    			return $this->interacao_para_consultar_posterior($mensagem);
-	    		}
-	    	}
-	    		return "Não comprendi sua mensagem. <br/> Por favor! tente novamente";							
+					if ($this->verifica_qnt_acoes($mensagem) > 1) {
+    		return false;
+		} else {
+    		if ($this->interacao_sobre_acao($mensagem)) {
+        		return $this->interacao_sobre_acao($mensagem);
+    		} else if ($this->interacao_sobre_criador($mensagem)) {
+	        	return $this->interacao_sobre_criador($mensagem);
+    		} else if ($this->interacao_sobre_objetivo($mensagem)) {
+        		return $this->interacao_sobre_objetivo($mensagem);
+    		} else if ($this->interacao_sobre_exemplo($mensagem)) {
+		        return $this->interacao_sobre_exemplo($mensagem);
+    		} else if ($this->interacao_para_exibir_todas_tarefas($mensagem)) {
+	        	return $this->interacao_para_exibir_todas_tarefas($mensagem);
+    		} else if ($this->validarMsgParaCriarTarefa($mensagem) == true and $this->verificar_campos_criar($mensagem) == null) {
+	        	return "Criar";
+    		} else if ($this->verificar_campos_criar($mensagem) and $this->validarMsgParaCriarTarefa($mensagem) == true) {
+		        return "faltando: " . $campo_faltando = $this->verificar_campos_criar($mensagem);
+    		} else if ($this->validarMsgParaConsultar($mensagem) == true and $this->verifica_campos_consultar($mensagem) != null and $this->interacao_para_consultar_anterior($mensagem) == false and $this->interacao_para_consultar_posterior($mensagem)== false){
+		        return $this->verifica_campos_consultar($mensagem);
+    		} else if ($this->validarMsgParaDeletar($mensagem) == true and $this->verifica_campos_deletar($mensagem) != null) {
+	       		return $this->verifica_campos_deletar($mensagem);
+    		} else if($this->interacao_para_consultar_anterior($mensagem)){
+    			return $this->interacao_para_consultar_anterior($mensagem);
+    		} else if($this->interacao_para_consultar_posterior($mensagem)){
+    			return $this->interacao_para_consultar_posterior($mensagem);
+    		}
+    	}
+    		return "Não comprendi sua mensagem. <br/> Por favor! tente novamente";	
 		}		
 
 		private function formatarMensagem($mensagem){
@@ -254,7 +271,9 @@
     			"ChavesSobreObjetivo" => "objetivo, feita, criada, construida, implementada, programada, desenvolvida, fez",
     			"ExemploConsultar" => "Para realizar uma consulta, você precisa me informa, pelo menos, um campo de buscar <br/>exemplo: consulte a tarefa com nome: **",
     			"exemploCriar" => "Para criar uma tarefa, siga o padrão abaixo. <br/>Ex.: criar tarefa nome: ** descrição: ** prazo:**",
-    			"exemploExcluir" => "Para excluir uma tarefa, você precisa me informa, pelo menos, um campo de buscar <br/>exemplo: excluir a tarefa com nome: **"
+    			"exemploExcluir" => "Para excluir uma tarefa, você precisa me informa, pelo menos, um campo de buscar <br/>exemplo: excluir a tarefa com nome: **",
+    			"chavesParaConsultarAntes" => "antes, anterior, anteriores, até",
+    			"chavesParaConsultarDepois" => "posterior, depois"
 			);
     	}		
 
