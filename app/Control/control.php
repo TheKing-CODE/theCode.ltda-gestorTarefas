@@ -49,11 +49,11 @@
 
 		private function criarTarefa(string $nome, string $descricao, string $prazo, int $chave){
 			//($this->validarChave($chave))?$this->model->criarTarefa($nome, $descricao, $prazo, $chave):"erro";
-			if($this->validarChave($chave)){		
+//			if($this->validarChave($chave)){		
 				$this->model->criarTarefa($nome, $descricao, $prazo, $this->chave);
 				$this->chaves++;
-			}else
-				return "Limite de tarefas já foi atingido";
+			/*}else
+				return "Limite de tarefas já foi atingido";*/
 		}
 
 		private function consultarTarefa($campo){
@@ -66,6 +66,10 @@
 
 		private function mostrar_todas_tarefas(){
 			return $this->model->mostrar_todas_tarefas();
+		}
+
+		private function consultar_tarefas_anteriores($campo){
+			return $this->model->consultar_tarefas_anteriores($campo);			
 		}
 
 		public function __construct($mensagem){
