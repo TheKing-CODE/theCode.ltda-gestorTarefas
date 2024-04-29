@@ -2,6 +2,7 @@
 	/**
 	 * 
 	 */
+/*	session_start();*/
 	include 'C:\xampp\htdocs\Gestor_Tarefas\app\model\model.php';
 	include 'C:\xampp\htdocs\Gestor_Tarefas\app\Control\classComunicacao.php';
 	class control
@@ -10,6 +11,7 @@
 		private $comunicacao; 
 		private $mensagem;
 		private $chave;
+		private $tarefas = array();
 
 		/*private function setMensagem($mensagem):void{
 			$this->comunicacao = new Comunicacao($mensagem);
@@ -77,6 +79,9 @@
 			$this->model = new Model();
 			$this->comunicacao = new Comunicacao($mensagem);
 			$this->chave = 0;
+/*			if($this->model->get_todas_tarefas()){
+				$_SESSION['tarefas'] = $this->model->get_todas_tarefas();
+			}*/
 		}
 	}
 ?>

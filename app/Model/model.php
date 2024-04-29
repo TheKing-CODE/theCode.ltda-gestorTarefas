@@ -2,7 +2,7 @@
 /**
  * 
  */
-    include 'classTarefas.php';
+   include 'classTarefas.php';
 	class Model
 	{
 		private $tarefas;
@@ -37,7 +37,16 @@
 		}
 
 		public function get_todas_tarefas(){
-			return "todas as tarefas";//$this->tarefas;
+			if(isset($this->tarefas) && !empty($this->tarefas)){
+				return $this->tarefas;	
+			}else{			
+				return false;
+			};
+		}
+
+		public function setTarefas($tarefas){
+			if(isset($tarefas) && !empty($tarefas)){
+				$this->tarefas = $tarefas;
 		}
 
 		public function consultar_tarefas_anteriores($campo){

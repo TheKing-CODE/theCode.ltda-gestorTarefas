@@ -4,19 +4,6 @@
 	 */
 	class Comunicacao
 	{
-	    private $mensagemRecebidaOriginal; 
-	    private $mensagemRecebida = array();
-	    private $chavesParaCriarTarefa;
-    	private $chavesParaConsultaTarefa;
-    	private $chavesParaExcluirTarefa;
-   		private $chavesParaPerguntas;
-    	private $chavesSobreObjetivo;
-   		private $chavesParaComandos;
-    	private $chavesSobreCriador;
-    	private $chavesParaExemplos;
-    	private $chavesParaExibirExemplos;
-    	private $chavesParaExibirTodasAsTarefas;
-
     	private $chavesArray = array();
 
     	private $exemploConsultar = "";
