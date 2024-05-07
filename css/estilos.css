@@ -8,25 +8,26 @@ body{
     justify-content: center; /* alinha os itens horizontalmente no centro */
     align-items: center; /* alinha os itens verticalmente no centro */
     height: 100vh; /* altura total da janela do navegador */
-	background: #332717;
+	background: #548c82;
 }
 
 #titulo{
 	border-style: dotted;
 	text-align: center;
-	color: #c4c8c5;
+	color: #fcfade;
 	display: ;
 }
 #campo_dados{
 	border-style: solid;
-	border-color: red;	
+	border-color: #fcfade;	
 	width: 900px;
 	height: 430px;
 	padding: 10px;	
 }
 #campo_label_respostas{
 	border-style: dotted;
-	border-color: blue;
+	border-color: #d1ce95;
+	background-color: #d1ce95;
 	padding: 10px;
 	width: 870px;
 	height: 380px;
