@@ -11,28 +11,36 @@
 		private $comunicacao; 
 		private $mensagem;
 		private $chave;
-		private $tarefas = array();
+		private $tarefas = array();		
 
 		/*private function setMensagem($mensagem):void{
 			$this->comunicacao = new Comunicacao($mensagem);
 		}*/
 
 		public function verificaAcaoDesejada($mensagem){			
-			$retorno = $this->comunicacao->verificaAcaoDesejada($mensagem);			
-			if (is_array($retorno)) {    		
-    			$dados_tarefa = $this->comunicacao->extrair_dados($retorno);
-    			return $this->criarTarefa($dados_tarefa[nome], $dados_tarefa[descricao], $dados_tarefa[prazo]);
-			}elseif ($retorno === "consultar") {    		
-    			$dados_tarefas = $this->comunicacao->extrair_dados($retorno);
-    			 foreach ($dados_tarefa as $tarefa => $conteudo) {
-        			// Retorna o primeiro conteúdo encontrado
+			$retorno = $this->comunicacao->verificaAcaoDesejada($mensagem);		
+
+			if ($retorno === "Criar") {    		
+				//echo $mensagem;
+    			$dados_tarefa = $this->comunicacao->extrair_dados($mensagem);    			    			
+    			//var_dump($dados_tarefa);
+    			//$nomeNovo = $dados_tarefa["nome:"];
+    			//echo $nomeNovo;
+    			$this->criarTarefa($dados_tarefa["nome:"], $dados_tarefa["descricao:"], $dados_tarefa["prazo:"]);
+    			return "Tarefa criada com sucesso";
+			}elseif ($retorno === "Consultar") {    						
+    			$campoBuscar = $this->comunicacao->verifica_campos_consultar($mensagem);
+    			return $this->model->consultarTarefa($campoBuscar);
+    			/* foreach ($dados_tarefa as $tarefa => $conteudo) {
+        			//Retorna o primeiro conteúdo encontrado
         			return $this->consultarTarefa($conteudo);
-    			 };	
+    			 };	*/
 			} elseif ($retorno === "excluir") {    		
     			$dados_tarefas = $this->comunicacao->extrair_dados($retorno);
     			 foreach ($dados_tarefa as $tarefa => $conteudo) {
         			// Retorna o primeiro conteúdo encontrado
-        			return $this->excluirTarefa($conteudo);
+        			$this->excluirTarefa($conteudo);
+        			return "Tarefa excluida com sucesso";
     			 };	
 			} elseif($retorno == "todas tarefas"){
 				return $this->mostrar_todas_tarefas();
@@ -49,12 +57,12 @@
 				return $retorno = false;			
 		}
 
-		private function criarTarefa(string $nome, string $descricao, string $prazo, int $chave){
+		private function criarTarefa(string $nome, string $descricao, string $prazo/* int $chave = "0"*/){
 			//($this->validarChave($chave))?$this->model->criarTarefa($nome, $descricao, $prazo, $chave):"erro";
 //			if($this->validarChave($chave)){		
 				$this->model->criarTarefa($nome, $descricao, $prazo, $this->chave);
-				$this->chaves++;
-			/*}else
+				$this->chave++;
+			/*}else	
 				return "Limite de tarefas já foi atingido";*/
 		}
 
@@ -72,6 +80,10 @@
 
 		private function consultar_tarefas_anteriores($campo){
 			return $this->model->consultar_tarefas_anteriores($campo);			
+		}
+
+		public function setTarefas($tarefas){
+			$this->model->setTarefas($tarefas);
 		}
 
 		public function __construct($mensagem){

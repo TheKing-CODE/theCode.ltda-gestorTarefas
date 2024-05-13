@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GESTOR DE TAREFAS</title>
-    <link rel="stylesheet" href="css\estilos.css">
+    <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
     <header>
@@ -15,16 +15,21 @@
         <div id="campo_dados">
             <form id="formulario_resposta">
                 <div id="campo_label_respostas">
-                    <label id="campo_respostas">Respostas</label>
+                    <label id="campo_respostas"><p id="fix-respotas">Respostas</p><br/> <p id="exemplos">Alguns exemplos de comandos: "Mostre como criar uma tarefa" - "Consulte as tarefas com prazo: **" - "Qual seu objetivo?"</p></label>
                 </div>        
             </form>
-            <form id="formulario_mensagem">                
-                <input type="text" id="campo_digitacao"></input>
-                <input type="submit" id="button_envia"></input>
-            </form>
+            <form id="formulario_mensagem" action="public\processa.php" method="post">     
+                <input type="text" id="campo_digitacao" name="mensagem"></input>
+                <input type="submit" id="button_envia" value="Enviar"></input>
+            </form>            
         </div>
+        <div id="link">
+            <a href="https://github.com/TheKing-CODE/theCode.ltda-gestorTarefas" style="color: black">GitHub</a>     
+            <a href="https://instagram.com/thecode.ltda" style="color: black">Instagram</a>     
+        </div>    
     </main>
-    <footer>        
+    <footer>   
+
     </footer>
 </body>  
 </html>

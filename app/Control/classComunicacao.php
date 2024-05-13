@@ -43,7 +43,7 @@
 	    //private function formatarMsgParaCriarTarefa($mensagem){
 
 	    //ConsultaTarefa
-	    private function verifica_campos_consultar($mensagem){
+	    public function verifica_campos_consultar($mensagem){
 			// Define os padrões a serem procurados
     		$padroes = array('/\bnome:\s*(\S+)/i', '/\bdescrição:\s*(\S+)/i', '/\bprazo\s*:\s*(\S+)/i');
     
@@ -171,7 +171,8 @@
 		}
 
 		public function extrair_dados($string, $campos = "") { //campos ex.: array('nome', 'descricao', 'prazo');//
-    		$padrao = '/nome: (.*?) descrição: (.*?) prazo: (.*?)/i';
+    		//$string = "criar tarefa nome:testar descrição:testando prazo:11/05/2024";
+    		$padrao = '/nome:(.*?)\sdescrição:(.*?)\sprazo:(.*?)$/i';
     		if($campos != ""){
     			$padrao = '/(?:' . implode('|', $campos) . '): (.*?)(?=' . implode('|', $campos) . '|$)/i';
    				preg_match_all($padrao, $string, $matches);
@@ -186,7 +187,7 @@
         			$nome = $matches[1];
         			$descricao = $matches[2];
         			$prazo = $matches[3];
-        			return array('nome' => $nome, 'descrição' => $descricao, 'prazo' => $prazo);
+        			return array('nome:' => $nome, 'descricao:' => $descricao, 'prazo:' => $prazo);
     			} else {
         			return null;
     			}
@@ -213,7 +214,7 @@
     		} else if ($this->verificar_campos_criar($mensagem) and $this->validarMsgParaCriarTarefa($mensagem) == true) {
 		        return "faltando: " . $campo_faltando = $this->verificar_campos_criar($mensagem);
     		} else if ($this->validarMsgParaConsultar($mensagem) == true and $this->verifica_campos_consultar($mensagem) != null and $this->interacao_para_consultar_anterior($mensagem) == false and $this->interacao_para_consultar_posterior($mensagem)== false){
-		        return $this->verifica_campos_consultar($mensagem);
+		        return "Consultar";/*$this->verifica_campos_consultar($mensagem);*/
     		} else if ($this->validarMsgParaDeletar($mensagem) == true and $this->verifica_campos_deletar($mensagem) != null) {
 	       		return $this->verifica_campos_deletar($mensagem);
     		} else if($this->interacao_para_consultar_anterior($mensagem)){

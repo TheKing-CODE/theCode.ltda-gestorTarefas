@@ -19,21 +19,25 @@
 			//($this->validarChave($chave))?$this->tarefas[$chave]->criarTarefa($nome,$descricao,$prazo, false, $chave):"erro";			
 			$this->tarefas = array($chave => new Tarefa);
 			$this->tarefas[$chave]->criarTarefa($nome,$descricao,$prazo, false, $chave); 
+			$this->atualizarDados();
 		}
 
 		public function excluirTarefa($campo){
 			$chave = array_search($campo, $this->tarefas);
 			unset($this->tarefas[$chave]);
 			array_multisort($this->tarefas, SORT_ASC);
+			$this->atualizarDados;
 		}
 
 		public function consultarTarefa($campo){
-			$chave = array_search($campo, $this->tarefas);
-			if($chave =! false){
+			$chave = array_search("testar", $this->tarefas);
+			print_r($this->tarefas);
+			//var_dump( $this->tarefas);
+			/*if($chave !== false){
 				return $this->tarefas[$chave];
 			}else{
 				return false;
-			};
+			};*/
 		}
 
 		public function get_todas_tarefas(){
@@ -45,7 +49,7 @@
 		}
 
 		public function setTarefas($tarefas){
-			if(isset($tarefas) && !empty($tarefas)){
+			if(isset($tarefas) && !empty($tarefas))
 				$this->tarefas = $tarefas;
 		}
 
@@ -96,6 +100,11 @@
 		        // Se não houver ":" na string, retorna false
 		        return false;
 		    }
+		}
+
+		private function atualizarDados(){
+			$dados = serialize($this->tarefas);
+			setcookie('tarefas', $dados, time() + 3600, '/');
 		}
 
 		public function __construct()

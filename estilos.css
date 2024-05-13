@@ -1,0 +1,57 @@
+body{
+/*	background: rgb(75,62,77);
+	background: -moz-linear-gradient(90deg, rgba(75,62,77,1) 14%, rgba(30,140,147,1) 37%, rgba(215,79,51,1) 100%);
+	background: -webkit-linear-gradient(90deg, rgba(75,62,77,1) 14%, rgba(30,140,147,1) 37%, rgba(215,79,51,1) 100%);
+	background: linear-gradient(90deg, rgba(75,62,77,1) 14%, rgba(30,140,147,1) 37%, rgba(215,79,51,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#4b3e4d",endColorstr="#d74f33",GradientType=1);*/
+	display: flex;
+  justify-content: center; /* alinha os itens horizontalmente no centro */
+  align-items: center; /* alinha os itens verticalmente no centro */
+  height: 100vh; /* altura total da janela do navegador */
+	background: #548c82;
+}
+
+#titulo{
+	border-style: dotted;
+	text-align: center;
+	color: #fcfade;
+}
+#campo_dados{
+	border-style: solid;
+	border-color: #fcfade;	
+	width: 900px;
+	height: 430px;
+	padding: 10px;	
+	margin-bottom: 6px;
+}
+#campo_label_respostas{
+	border-style: dotted;
+	border-radius: 6px;
+	border-color: #d1ce95;
+	background-color: #d1ce95;
+	padding: 10px;
+	width: 870px;
+	height: 380px;
+	padding: 10px;
+	margin-bottom: 6px;
+	text-align: center;
+}
+#formulario_mensagem{
+	text-align: center;
+}
+#campo_digitacao{
+	width: 800px;		
+}
+#link{	
+	text-align: center;
+	color	: #fcfade;
+}
+#exemplos{
+	
+}
+
+#fix-respotas{
+	color: white;		
+}
+
+
